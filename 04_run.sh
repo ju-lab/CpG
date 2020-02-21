@@ -1,1 +1,23 @@
-python 04_union_indivial.py &> 04_run.out
+python 04_Signature_extraction.py 1 &> 04_1.out
+python 04_Signature_extraction.py 2 &> 04_2.out
+python 04_Signature_extraction.py 3 &> 04_3.out
+python 04_Signature_extraction.py 4 &> 04_4.out
+python 04_Signature_extraction.py 5 &> 04_5.out
+python 04_Signature_extraction.py 6 &> 04_6.out
+python 04_Signature_extraction.py 7 &> 04_7.out
+python 04_Signature_extraction.py 8 &> 04_8.out
+python 04_Signature_extraction.py 9 &> 04_9.out
+python 04_Signature_extraction.py 10 &> 04_10.out
+python 04_Signature_extraction.py 11 &> 04_11.out
+python 04_Signature_extraction.py 12 &> 04_12.out
+python 04_Signature_extraction.py 13 &> 04_13.out
+python 04_Signature_extraction.py 14 &> 04_14.out
+python 04_Signature_extraction.py 15 &> 04_15.out
+python 04_Signature_extraction.py 16 &> 04_16.out
+python 04_Signature_extraction.py 17 &> 04_17.out
+python 04_Signature_extraction.py 18 &> 04_18.out
+python 04_Signature_extraction.py 19 &> 04_19.out
+python 04_Signature_extraction.py 20 &> 04_20.out
+python 04_Signature_extraction.py 21 &> 04_21.out
+python 04_Signature_extraction.py 22 &> 04_22.out
+python 04_Signature_extraction.py 23 &> 04_23.out

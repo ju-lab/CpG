@@ -237,12 +237,29 @@ summary(fig1b_NR_TSS$V8)
 summary(fig1b_intergenic$V8)
 summary(fig1b_NM_intragenic$V8)
 summary(fig1b_NR_intragenic$V8)
+
 summary(fig1b_others$V8)
 summary(fib1b$V8)
+?shapiro.test()
+library(rstatix)
+temp_fib1b <- rbind(fig1b_NM_TSS, fig1b_NR_TSS,fig1b_intergenic,fig1b_NM_intragenic,fig1b_NR_intragenic)
+temp_fib1b %>% kruskal_test(V8 ~ V14)
+pwc <- temp_fib1b %>% dunn_test(V8 ~ V14,p.adjust.method = "bonferroni")
+pwc
 
-length(fig1b_NM_TSS$V8)
-length(fig1b_NR_TSS$V8)
-length(fig1b_intergenic$V8)
+?kruskal.test
+?kruskal_test
+wilcox.test(fig1b_NM_TSS$V8,fig1b_intergenic$V8)
+wilcox.test(fig1b_NM_TSS$V8,fig1b_NM_intragenic$V8)
+wilcox.test(fig1b_NM_TSS$V8,fig1b_NR_intragenic$V8)
+wilcox.test(fig1b_NR_TSS$V8,fig1b_intergenic$V8)
+wilcox.test(fig1b_NR_TSS$V8,fig1b_NM_intragenic$V8)
+wilcox.test(fig1b_NR_TSS$V8,fig1b_NR_intragenic$V8)
+wilcox.test(fig1b_NR_TSS$V8,fig1b_NM_TSS$V8)
+
+plot(fig1b_NM_TSS$V8,fig1b_NM_TSS$V8)
+hist(fig1b_NR_TSS$V8)
+hist(fig1b_intergenic$V8)
 length(fig1b_NM_intragenic$V8)
 length(fig1b_NR_intragenic$V8)
 length(fig1b_others$V8)
@@ -292,6 +309,20 @@ axis(side=2,at=c(-0.1,0.0,0.1,0.2,0.3,0.4)) +
 legend(1400,0.1,legend=c('TSS_coding CGI','TSS_noncoding_CGI','Intergenic CGI','Intragenic_coding CGI','Intragenic_noncoding CGI'),pch=20,col=c('red','orange','blue','skyblue','green'),cex=0.8)
 dev.off()
 
+# statistical test
+apply(matrix(fig2b$V1,20),2,mean)
+red<-apply(matrix(fig2b$V5,20),2,mean)/apply(matrix(fig2b$V4,20),2,mean)
+blue<-apply(matrix(fig2b$V9,20),2,mean)/apply(matrix(fig2b$V8,20),2,mean)
+skyblue<-apply(matrix(fig2b$V11,20),2,mean)/apply(matrix(fig2b$V10,20),2,mean)
+t.test(red[151:350],skyblue[151:350],paired = T)
+t.test(skyblue[151:350],blue[151:350],paired = T)
+skyblue2<-apply(matrix(fig2b$V11,20),2,mean)/apply(matrix(fig2b$V10,20),2,mean)
+orange<-apply(matrix(fig2b$V7,20),2,mean)/apply(matrix(fig2b$V6,20),2,mean)
+green<-apply(matrix(fig2b$V13,20),2,mean)/apply(matrix(fig2b$V12,20),2,mean)
+skyblue2[31:70]
+t.test(orange[151:350],skyblue[151:350],paired = T)
+t.test(skyblue[151:350],green[151:350],paired = T)
+
 #'red','orange','blue','skyblue','green'
 
 #fig2c
@@ -307,7 +338,19 @@ axis(side=2,at=c(-0.1,0.0,0.3,0.6,.9)) +
 axis(side=1,at=c(-6500,-5500,-2500,-500,500,2500,5500,6500))
 #legend(1400,0.1,legend=c('TSS_coding CGI','TSS_noncoding_CGI','Intergenic CGI','Intragenic_coding CGI','Intragenic_noncoding CGI'),pch=20,col=c('red','orange','blue','skyblue','green'),cex=0.8)
 dev.off()
-  
+
+red<-apply(matrix(fig2c$V5,20),2,mean)/apply(matrix(fig2c$V4,20),2,mean)
+blue<-apply(matrix(fig2c$V9,20),2,mean)/apply(matrix(fig2c$V8,20),2,mean)
+skyblue<-apply(matrix(fig2c$V11,20),2,mean)/apply(matrix(fig2c$V10,20),2,mean)
+t.test(red[151:350],skyblue[151:350],paired = T)
+t.test(skyblue[151:350],blue[151:350],paired = T)
+skyblue2<-apply(matrix(fig2c$V11,100),2,mean)/apply(matrix(fig2c$V10,100),2,mean)
+orange<-apply(matrix(fig2c$V7,20),2,mean)/apply(matrix(fig2c$V6,20),2,mean)
+green<-apply(matrix(fig2c$V13,20),2,mean)/apply(matrix(fig2c$V12,20),2,mean)
+skyblue2[31:70]
+t.test(orange[151:350],skyblue[151:350],paired = T)
+t.test(skyblue[151:350],green[151:350],paired = T)
+
 #fig2d
 install.packages("vioplot")
 library(vioplot)
@@ -324,6 +367,14 @@ axis(side=1,at=1:5,labels=c('TSS_coding CGI','TSS_noncoding_CGI','Intergenic CGI
   axis(side=2,at=c(0,0.33,0.67,1.0))
 dev.off()
 
+mean(fig2d$methylation[fig2d$input_class=='NM_TSS'])
+mean(fig2d$methylation[fig2d$input_class=='NR_TSS'])
+     mean(fig2d$methylation[fig2d$input_class=='intergenic'])
+          mean(fig2d$methylation[fig2d$input_class=='NM_intragenic'])
+               mean(fig2d$methylation[fig2d$input_class=='NR_intragenic'])
+
+
+
 nrow(fig2d[fig2d$methylation>=0.67 & fig2d$input_class=='NM_TSS',]) / nrow(fig2d[fig2d$input_class=='NM_TSS',])
 nrow(fig2d[fig2d$methylation>=0.67 & fig2d$input_class=='NR_TSS',]) / nrow(fig2d[fig2d$input_class=='NR_TSS',])
 nrow(fig2d[fig2d$methylation>=0.67 & fig2d$input_class=='intergenic',]) / nrow(fig2d[fig2d$input_class=='intergenic',])
@@ -337,28 +388,36 @@ pie(c(nrow(fig2d[fig2d$methylation>=0.67 & fig2d$input_class=='intergenic',]),nr
 pie(c(nrow(fig2d[fig2d$methylation>=0.67 & fig2d$input_class=='NM_intragenic',]),nrow(fig2d[fig2d$methylation<0.67 & fig2d$input_class=='NM_intragenic',])),col=c('violetred1','turquoise3'),labels = NA,border=NA,clockwise = T,angle=0,radius = 1)+
 pie(c(nrow(fig2d[fig2d$methylation>=0.67 & fig2d$input_class=='NR_intragenic',]),nrow(fig2d[fig2d$methylation<0.67 & fig2d$input_class=='NR_intragenic',])),col=c('violetred1','turquoise3'),labels = NA,border=NA,clockwise = T,angle=0,radius = 1)
 dev.off()
+nrow(fig2d[fig2d$methylation>0.67 & fig2d$input_class=='NM_TSS',])/(nrow(fig2d[fig2d$input_class=='NM_TSS',]))
+nrow(fig2d[fig2d$methylation>0.67 & fig2d$input_class=='NR_TSS',])/(nrow(fig2d[fig2d$input_class=='NR_TSS',]))
+nrow(fig2d[fig2d$methylation>0.67 & fig2d$input_class=='intergenic',])/(nrow(fig2d[fig2d$input_class=='intergenic',]))
+nrow(fig2d[fig2d$methylation>0.67 & fig2d$input_class=='NM_intragenic',])/(nrow(fig2d[fig2d$input_class=='NM_intragenic',]))
+nrow(fig2d[fig2d$methylation>0.67 & fig2d$input_class=='NR_intragenic',])/(nrow(fig2d[fig2d$input_class=='NR_intragenic',]))
+
 
 fig2d
 #fig2e
 par(mfrow=c(1,1))
-pdf("fig2e.pdf")
-boxplot(fig2d$size[fig2d$methylation>=0.67 & fig2d$input_class=='NM_intragenic'],fig2d$size[fig2d$methylation<0.67 & fig2d$input_class=='NM_intragenic'],outline=F,
+pdf("fig2e_new.pdf")
+boxplot(fig2d$size[fig2d$methylation>0.67 & fig2d$input_class=='NM_intragenic'],fig2d$size[fig2d$methylation<0.33 & fig2d$input_class=='NM_intragenic'],outline=F,
         pars=list(boxwex=0.3,staplewex=0.5,outwex=0.5),names=c('Group A','Group B'),
         ylab = 'Size of CpG islands',col=c('cyan1','cyan4'),yaxt='n',ylim=c(200,1800))
 axis(side=2,at=c(200,600,1000,1400,1800))
 dev.off()
 #fig2f
-sum(fig2d$mutated[fig2d$methylation>=0.67 & fig2d$input_class=='NM_intragenic']) / sum(fig2d$total[fig2d$methylation>=0.67 & fig2d$input_class=='NM_intragenic'])
-sum(fig2d$mutated[fig2d$methylation<0.67 & fig2d$input_class=='NM_intragenic'])/sum(fig2d$total[fig2d$methylation<0.67 & fig2d$input_class=='NM_intragenic'])
+sum(fig2d$mutated[fig2d$methylation>0.67 & fig2d$input_class=='NM_intragenic']) / sum(fig2d$total[fig2d$methylation>0.67 & fig2d$input_class=='NM_intragenic'])
+sum(fig2d$mutated[fig2d$methylation<0.33 & fig2d$input_class=='NM_intragenic'])/sum(fig2d$total[fig2d$methylation<0.33 & fig2d$input_class=='NM_intragenic'])
 sum(fig2d$mutated[fig2d$input_class=='NM_intragenic'])/sum(fig2d$total[fig2d$input_class=='NM_intragenic'])
-pdf("fig2f.pdf")
-barplot(c(0.2630227743,0.05998946654),beside = T,ylim=c(0,0.3),col=c('cyan1','cyan4'),border=c('cyan1','cyan4'),space=2,names.arg = c('Group A', 'Group B'),family='serif',ylab='Mutation rate',xlab='Intragenic_coding CGI')
+pdf("fig2f_new.pdf")
+barplot(c(0.2630227743,0.05542274786),beside = T,ylim=c(0,0.3),col=c('cyan1','cyan4'),border=c('cyan1','cyan4'),space=2,names.arg = c('Group A', 'Group B'),family='serif',ylab='Mutation rate',xlab='Intragenic_coding CGI')
 abline(h=0.276)
 abline(h=0.1116695827)
 dev.off()
 
 #Fig3
-fig3a<-read.table("fig3a_pie.txt",header=T) # methyl>=0.67
+fig3a<-read.table("fig3a_pie.txt",header=T) # methyl>0.67
+chisq.test(fig3a[7:9,3:4])
+
 fig3a_all<-read.table("fig3a_pie_nomethyl.txt",header=T)
 fig3a<-as.matrix(fig3a)
 fig3a_all<-as.matrix(fig3a_all)
@@ -409,3 +468,10 @@ par(mfrow=c(1,1))
 a<-t(as.matrix(fig3b[,c(1:6)]/fig3b$total))
 barplot(a[,c(9:1)],beside = F, horiz = T,axes = F,col = rainbow(6))
 dev.off()
+
+# Signature bar plot
+fig1d<-read.table("/home/users/jhyouk/89_backup_Workstation/jhyouk/CpG_revision/final_signature_context_all_sig.txt",header=T)
+pdf("fig1d_union.pdf")
+barplot(100*fig1d$freq[-97]/fig1d$freq[97],ylim=c(0,5),col=c(rep("#36B6E1",16),rep("#07090A",16),rep("#D92F2A",16),rep("#CBCACB",16),rep("#9EC866",16),rep("#E9C6C4",16)))
+dev.off()
+fig1d[97,]
